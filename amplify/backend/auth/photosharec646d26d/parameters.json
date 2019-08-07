@@ -1,9 +1,9 @@
 {
-    "identityPoolName": "photoshare2dfde8c2_identitypool_2dfde8c2",
+    "identityPoolName": "photosharec646d26d_identitypool_c646d26d",
     "allowUnauthenticatedIdentities": true,
-    "openIdLambdaRoleName": "photos2dfde8c2_openid_lambda_role",
-    "resourceNameTruncated": "photos2dfde8c2",
-    "userPoolName": "photoshare2dfde8c2_userpool_2dfde8c2",
+    "openIdLambdaRoleName": "photosc646d26d_openid_lambda_role",
+    "resourceNameTruncated": "photosc646d26d",
+    "userPoolName": "photosharec646d26d_userpool_c646d26d",
     "autoVerifiedAttributes": [
         "email"
     ],
@@ -21,7 +21,7 @@
     "requiredAttributes": [
         "email"
     ],
-    "userpoolClientName": "photos2dfde8c2_app_client",
+    "userpoolClientName": "photosc646d26d_app_client",
     "userpoolClientGenerateSecret": true,
     "userpoolClientRefreshTokenValidity": 30,
     "userpoolClientWriteAttributes": [
@@ -30,10 +30,10 @@
     "userpoolClientReadAttributes": [
         "email"
     ],
-    "mfaLambdaRole": "photos2dfde8c2_totp_lambda_role",
-    "userpoolClientLambdaRole": "photos2dfde8c2_userpoolclient_lambda_role",
+    "mfaLambdaRole": "photosc646d26d_totp_lambda_role",
+    "userpoolClientLambdaRole": "photosc646d26d_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": false,
-    "resourceName": "photoshare2dfde8c2",
+    "resourceName": "photosharec646d26d",
     "authSelections": "identityPoolAndUserPool",
     "authRoleName": {
         "Ref": "AuthRoleName"

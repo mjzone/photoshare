@@ -1,6 +1,6 @@
 {
 	"auth": {
-		"photoshare2dfde8c2": {
+		"photosharec646d26d": {
 			"service": "Cognito",
 			"providerPlugin": "awscloudformation",
 			"dependsOn": []
@@ -16,7 +16,7 @@
 		}
 	},
 	"storage": {
-		"photosharebucket": {
+		"photoshare": {
 			"service": "S3",
 			"providerPlugin": "awscloudformation"
 		}

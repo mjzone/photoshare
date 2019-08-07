@@ -14,11 +14,6 @@ export const getAlbum = `query GetAlbum($id: ID!) {
         owner
         visibility
         createdAt
-        file {
-          bucket
-          region
-          key
-        }
       }
       nextToken
     }
@@ -36,6 +31,9 @@ export const listAlbums = `query ListAlbums(
       title
       owner
       createdAt
+      pictures {
+        nextToken
+      }
     }
     nextToken
   }

@@ -5,16 +5,22 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 
 import { graphql, compose } from "react-apollo";
-import gql from "graphql-tag";
 import { graphqlMutation } from "aws-appsync-react";
 import { Auth } from "aws-amplify";
 
-import { createAlbum } from "../graphql/mutations";
-import { listAlbums } from "../graphql/queries";
-dayjs.extend(relativeTime);
+import { buildSubscription } from "aws-appsync";
 
-export class Album extends Component {
+import { createAlbum } from "../gql/mutations";
+import { onCreateAlbum } from "../gql/subscriptions";
+import { listAlbums } from "../gql/queries";
+
+dayjs.extend(relativeTime);
+class Album extends Component {
   state = { title: "" };
+
+  componentDidMount() {
+    this.props.data.subscribeToMore(buildSubscription(onCreateAlbum, listAlbums));
+  }
 
   handleSubmit = async e => {
     e.preventDefault();
@@ -34,7 +40,6 @@ export class Album extends Component {
   };
 
   handleChange = (e, { value }) => {
-    debugger;
     this.setState({ title: value });
   };
 
@@ -84,13 +89,14 @@ export class Album extends Component {
 }
 
 export default compose(
-  graphqlMutation(gql(createAlbum), gql(listAlbums), "Album"),
-  graphql(gql(listAlbums), {
+  graphqlMutation(createAlbum, listAlbums, "Album"),
+  graphql(listAlbums, {
     options: {
       fetchPolicy: "cache-and-network"
     },
     props: props => ({
-      albums: props.data.listAlbums ? props.data.listAlbums.items : []
+      albums: props.data.listAlbums ? props.data.listAlbums.items : [],
+      data: props.data
     })
   })
 )(Album);

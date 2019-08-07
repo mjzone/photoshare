@@ -1,18 +1,18 @@
 {
     "dev": {
         "awscloudformation": {
-            "AuthRoleName": "photoshare-dev-20190803112552-authRole",
-            "UnauthRoleArn": "arn:aws:iam::885121665536:role/photoshare-dev-20190803112552-unauthRole",
-            "AuthRoleArn": "arn:aws:iam::885121665536:role/photoshare-dev-20190803112552-authRole",
+            "AuthRoleName": "photoshare-dev-20190806170835-authRole",
+            "UnauthRoleArn": "arn:aws:iam::885121665536:role/photoshare-dev-20190806170835-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::885121665536:role/photoshare-dev-20190806170835-authRole",
             "Region": "us-east-1",
-            "DeploymentBucketName": "photoshare-dev-20190803112552-deployment",
-            "UnauthRoleName": "photoshare-dev-20190803112552-unauthRole",
-            "StackName": "photoshare-dev-20190803112552",
-            "StackId": "arn:aws:cloudformation:us-east-1:885121665536:stack/photoshare-dev-20190803112552/5e29ec50-b5b3-11e9-8312-0a6fb8e9c8ee"
+            "DeploymentBucketName": "photoshare-dev-20190806170835-deployment",
+            "UnauthRoleName": "photoshare-dev-20190806170835-unauthRole",
+            "StackName": "photoshare-dev-20190806170835",
+            "StackId": "arn:aws:cloudformation:us-east-1:885121665536:stack/photoshare-dev-20190806170835/baa3f060-b83e-11e9-8e24-1202dd259b0c"
         },
         "categories": {
             "auth": {
-                "photoshare2dfde8c2": {}
+                "photosharec646d26d": {}
             }
         }
     }

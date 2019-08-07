@@ -1,16 +1,15 @@
 import React, { Component } from "react";
 import { v4 as uuid } from "uuid";
 import { graphql, compose } from "react-apollo";
-import gql from "graphql-tag";
 import { S3Image } from "aws-amplify-react";
 import { Form, Icon, Table, Button, Loader, Container, Grid } from "semantic-ui-react";
 import { Storage } from "aws-amplify";
 import { Auth } from "aws-amplify";
-import { createPicture } from "../graphql/mutations";
-import { getAlbum } from "../graphql/queries";
+import { createPicture, updatePicture } from "../gql/mutations";
+import { getAlbum, listPictures } from "../gql/queries";
+import { graphqlMutation } from "aws-appsync-react";
 import config from "../aws-exports";
-
-export class AlbumPhotos extends Component {
+class AlbumPhotos extends Component {
   state = {
     name: "",
     file: undefined
@@ -55,17 +54,25 @@ export class AlbumPhotos extends Component {
   };
 
   handleDownload = async ({ visibility: level, file }) => {
-    debugger;
     try {
       const { bucket, region, key } = file;
       const [, , keyWithoutPrefix] = /([^/]+\/){2}(.*)$/.exec(key) || key;
-
       const url = await Storage.get(keyWithoutPrefix, { bucket, region, level });
-
       window.open(url);
     } catch (err) {
       console.error(err);
     }
+  };
+
+  sharePublic = async photo => {
+    const visibility = "public";
+    const id = photo.id;
+    this.props.updatePicture({
+      input: {
+        id,
+        visibility
+      }
+    });
   };
 
   handleChange = (field, event) => {
@@ -115,6 +122,10 @@ export class AlbumPhotos extends Component {
                 Owner
               </Table.HeaderCell>
               <Table.HeaderCell>
+                <Icon name={"eye"} />
+                Visibility
+              </Table.HeaderCell>
+              <Table.HeaderCell>
                  <Icon name={"download"} />
                 Download
               </Table.HeaderCell>
@@ -134,6 +145,7 @@ export class AlbumPhotos extends Component {
                   <Table.Row key={photo.id}>
                     <Table.Cell>{photo.name}</Table.Cell>
                     <Table.Cell>{photo.owner}</Table.Cell>
+                    <Table.Cell>{photo.visibility}</Table.Cell>
                     <Table.Cell>
                       {photo.file ? (
                         <Button icon labelPosition="right" onClick={() => this.handleDownload(photo)}>
@@ -146,8 +158,8 @@ export class AlbumPhotos extends Component {
                     </Table.Cell>
                     <Table.Cell>
                       {photo.file ? (
-                        <Button icon labelPosition="right" onClick={() => this.handleDownload(photo)}>
-                          <Icon name="eye" />
+                        <Button icon labelPosition="right" onClick={() => this.sharePublic(photo)}>
+                          <Icon name="share" />
                           Share Public
                         </Button>
                       ) : (
@@ -164,10 +176,10 @@ export class AlbumPhotos extends Component {
 }
 
 export default compose(
-  graphql(gql(createPicture), {
+  graphql(createPicture, {
     options: props => ({
       update: (proxy, { data: { createPicture } }) => {
-        const query = gql(getAlbum);
+        const query = getAlbum;
         const variables = {
           id: props.match.params.id
         };
@@ -194,7 +206,8 @@ export default compose(
         })
     })
   }),
-  graphql(gql(getAlbum), {
+  graphqlMutation(updatePicture),
+  graphql(getAlbum, {
     options: props => ({
       fetchPolicy: "cache-and-network",
       variables: {

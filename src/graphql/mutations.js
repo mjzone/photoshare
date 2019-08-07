@@ -58,31 +58,6 @@ export const deleteAlbum = `mutation DeleteAlbum($input: DeleteAlbumInput!) {
   }
 }
 `;
-// export const createPicture = `mutation CreatePicture($input: CreatePictureInput!) {
-//   createPicture(input: $input) {
-//     id
-//     name
-//     owner
-//     visibility
-//     file {
-//       bucket
-//       region
-//       key
-//     }
-//     createdAt
-//     album {
-//       id
-//       title
-//       owner
-//       createdAt
-//       pictures {
-//         nextToken
-//       }
-//     }
-//   }
-// }
-// `;
-
 export const createPicture = `mutation CreatePicture($input: CreatePictureInput!) {
   createPicture(input: $input) {
     id
@@ -95,6 +70,15 @@ export const createPicture = `mutation CreatePicture($input: CreatePictureInput!
       key
     }
     createdAt
+    album {
+      id
+      title
+      owner
+      createdAt
+      pictures {
+        nextToken
+      }
+    }
   }
 }
 `;
